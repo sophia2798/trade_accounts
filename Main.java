@@ -12,6 +12,7 @@ import pojo.TradeAccount;
 import repository.TradeAccountRepository;
 import service.CashAccountService;
 import service.MarginAccountService;
+import service.TradeAccountService;
 
 public class Main {
 
@@ -28,13 +29,25 @@ public class Main {
 
     }
 
-    public void loadTradeAccounts() throws IOException {
+    public static void loadTradeAccounts() throws IOException {
         Files.lines(paths[0])
             .forEach(line -> {
                 String[] words = line.split(" ");
                 Boolean isCashAccount = words[0].equals(TradeAccountType.CASH.toString());
                 if (isCashAccount) cashAccountService.createTradeAccount(new CashAccount(words[1], new BigDecimal(words[2])));
                 else marginAccountService.createTradeAccount(new MarginAccount(words[1], new BigDecimal(words[2])));
+            });
+    }
+
+    public static void applyTransactions() throws IOException {
+        Files.lines(paths[1])
+            .forEach(line -> {
+                String[] words = line.split(" ");
+                Boolean isCash = words[0].equals(TradeAccountType.CASH.toString());
+                TradeAccountService accountService = isCash ? cashAccountService : marginAccountService;
+                Transaction transaction = Transaction.valueOf(words[2]);
+                if (transaction.equals(Transaction.DEPOSIT)) accountService.deposit(words[1], new BigDecimal(words[3]));
+                else accountService.withdraw(words[1], new BigDecimal(words[3]));
             });
     }
 }
