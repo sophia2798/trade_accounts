@@ -24,7 +24,13 @@ public class Main {
 
     public static void main(String[] args) {
 
-
+        try {
+            loadTradeAccounts();
+            applyTransactions();
+            finalTest();
+        } catch (IOException exception) {
+            System.out.println(exception.getMessage());
+        }
 
     }
 
