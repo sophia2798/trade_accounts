@@ -32,14 +32,14 @@ public class CashAccountService implements TradeAccountService{
     @Override
     public void deposit(String id, BigDecimal amount) {
         CashAccount cashAccount = retrieveTradeAccount(id);
-        cashAccount.getCashBalance().add(amount);
+        cashAccount.setCashBalance(cashAccount.getCashBalance().add(amount));
         updateTradeAccount(cashAccount);
     }
 
     @Override
     public void withdraw(String id, BigDecimal amount) {
         CashAccount cashAccount = retrieveTradeAccount(id);
-        cashAccount.getCashBalance().subtract(amount);
+        cashAccount.setCashBalance(cashAccount.getCashBalance().subtract(amount));
         updateTradeAccount(cashAccount);
     }
 

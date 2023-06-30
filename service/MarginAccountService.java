@@ -32,14 +32,14 @@ public class MarginAccountService implements TradeAccountService{
     @Override
     public void deposit(String id, BigDecimal amount) {
         MarginAccount account = retrieveTradeAccount(id);
-        account.getMargin().add(amount);
+        account.setMargin(account.getMargin().add(amount));;
         updateTradeAccount(account);
     }
 
     @Override
     public void withdraw(String id, BigDecimal amount) {
         MarginAccount account = retrieveTradeAccount(id);
-        account.getMargin().subtract(amount);
+        account.setMargin(account.getMargin().subtract(amount));;
         updateTradeAccount(account);
     }
 
