@@ -8,7 +8,6 @@ import constants.TradeAccountType;
 import constants.Transaction;
 import pojo.CashAccount;
 import pojo.MarginAccount;
-import pojo.TradeAccount;
 import repository.TradeAccountRepository;
 import service.CashAccountService;
 import service.MarginAccountService;
@@ -50,4 +49,13 @@ public class Main {
                 else accountService.withdraw(words[1], new BigDecimal(words[3]));
             });
     }
+
+    public static void finalTest() throws IOException {
+        System.out.println("Account A1234B Cash Balance: " + cashAccountService.retrieveTradeAccount("A1234B").getCashBalance());
+        System.out.println("Account E3456F Cash Balance: " + cashAccountService.retrieveTradeAccount("E3456F").getCashBalance());
+        System.out.println("Account I5678J Cash Balance: " + cashAccountService.retrieveTradeAccount("I5678J").getCashBalance());
+        System.out.println("Account C2345D Margin: " + marginAccountService.retrieveTradeAccount("C2345D").getMargin());
+        System.out.println("Account G4567H Margin: " + marginAccountService.retrieveTradeAccount("G4567H").getMargin());
+    }
+
 }
